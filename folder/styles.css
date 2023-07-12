@@ -1,0 +1,109 @@
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Taskbar */
+.task-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 9999;
+}
+
+.task-bar__button {
+  margin-right: 10px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.task-bar__button:hover {
+  background-color: #005151;
+}
+
+/* Name Section */
+#name-section {
+  margin-top: 50px;
+}
+
+.section-container {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 66.6%;
+}
+
+.section-container label {
+  font-weight: bold;
+}
+
+.section-container input,
+.section-container select {
+  margin-left: 10px;
+}
+
+/* Engine Will Section */
+#engine-will-section {
+  margin-top: 10px;
+}
+
+#action-container {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 66.6%;
+}
+
+#action-container label {
+  font-weight: bold;
+}
+
+#action-container select {
+  margin-left: 10px;
+}
+
+/* Accordion Section */
+#accordion-section {
+  margin-top: 10px;
+}
+
+#ukg-accordion {
+  display: none;
+  width: 68%;
+  margin-top: 10px;
+}
+
+#ukg-accordion-panel > div {
+  margin-left: 20px;
+}
+
+.separator {
+  width: 68%;
+  border-top: 2px solid black;
+  margin: 10px 0;
+}
+
+#delete_checkbox {
+  margin-top: 10px;
+}
+
+#webchat_iframe {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  width: 30%;
+  height: 100vh; /* Adjust the height to fit your needs */
+  border: none;
+  background-color: #f2f2f2;
+}

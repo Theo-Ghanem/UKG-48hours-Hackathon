@@ -29,6 +29,7 @@ const employee_panel = document.getElementById("employee_panel");
 const allow_multi_job_shifts_li = document.getElementById("allow_multi_job_shifts_li");
 const assign_shifts_to_primary_job_only_li = document.getElementById("assign_shifts_to_primary_job_only_li");
 const deleteCheckbox = document.getElementById("delete_checkbox");
+const skillAndCertification = document.getElementById("skill_and_certification_slider");
 
 actionSelect.addEventListener("change", function () {
   if (actionSelect.value === "Delete") {
@@ -61,6 +62,8 @@ actionSelect.addEventListener("change", function () {
     longest_shift.style.display = "block";
     equalization_type_li.style.display = "block";
     worker_type_hour_equalization_weight_li.style.display = "block";
+    skillAndCertification.style.display = "none";
+    toggleAdvancedParametersById("advancedParameters");
   } else if (actionSelect.value === "Assign Open Shifts Only") {
     ukgAccordion.style.display = "block";
     budgetPanel.style.display = "block";
@@ -78,6 +81,8 @@ actionSelect.addEventListener("change", function () {
     allow_multi_job_shifts_li.style.display = "block";
     assign_shifts_to_primary_job_only_li.style.display = "block";
     min_job_segment_length_li.style.display = "block";
+    skillAndCertification.style.display = "none";
+    toggleAdvancedParametersById("advancedParameters");
   } else if (actionSelect.value === "Generate and Assign Shifts") {
     ukgAccordion.style.display = "block";
     budgetPanel.style.display = "block";
@@ -95,6 +100,8 @@ actionSelect.addEventListener("change", function () {
     allow_multi_job_shifts_li.style.display = "block";
     assign_shifts_to_primary_job_only_li.style.display = "block";
     min_job_segment_length_li.style.display = "block";
+    skillAndCertification.style.display = "none";
+    toggleAdvancedParametersById("advancedParameters");
   } else if (actionSelect.value === "Optimize Shift Contents") {
     ukgAccordion.style.display = "block";
     budgetPanel.style.display = "none";
@@ -112,6 +119,8 @@ actionSelect.addEventListener("change", function () {
     allow_multi_job_shifts_li.style.display = "block";
     assign_shifts_to_primary_job_only_li.style.display = "block";
     min_job_segment_length_li.style.display = "block";
+    skillAndCertification.style.display = "none";
+    toggleAdvancedParametersById("advancedParameters");
   } else if (actionSelect.value === "Generate Employee Shifts Only") {
     ukgAccordion.style.display = "block";
     budgetPanel.style.display = "block";
@@ -129,6 +138,8 @@ actionSelect.addEventListener("change", function () {
     allow_multi_job_shifts_li.style.display = "block";
     assign_shifts_to_primary_job_only_li.style.display = "block";
     min_job_segment_length_li.style.display = "block";
+    skillAndCertification.style.display = "none";
+    toggleAdvancedParametersById("advancedParameters");
   } else if (actionSelect.value === "Delete") {
     ukgAccordion.style.display = "none";
     budgetPanel.style.display = "block";
@@ -146,6 +157,8 @@ actionSelect.addEventListener("change", function () {
     allow_multi_job_shifts_li.style.display = "block";
     assign_shifts_to_primary_job_only_li.style.display = "block";
     min_job_segment_length_li.style.display = "block";
+    skillAndCertification.style.display = "none";v
+    toggleAdvancedParametersById("advancedParameters");
   } else if (actionSelect.value === "Advanced") {
     ukgAccordion.style.display = "block";
     budgetPanel.style.display = "block";
@@ -163,6 +176,9 @@ actionSelect.addEventListener("change", function () {
     allow_multi_job_shifts_li.style.display = "block";
     assign_shifts_to_primary_job_only_li.style.display = "block";
     min_job_segment_length_li.style.display = "block";
+    skillAndCertificationSlider.style.display = "none";
+    skillAndCertification.style.display = "block";
+    toggleAdvancedParameters(true);
   }
 });
 
@@ -244,14 +260,32 @@ weeklyBudgetSlider.addEventListener("input", function () {
   weeklyBudgetValue.textContent = weeklyBudgetSlider.value;
 });
 
+const skillAndCertificationSlider = document.getElementById("skill_and_certification_slider");
+const skillAndCertificationValue = document.getElementById("skill_and_certification_value");
+skillAndCertificationSlider.addEventListener("input", function () {
+  skillAndCertificationValue.textContent = skillAndCertificationSlider.value;
+});
+
+
 
 const workerTypeContainer = document.getElementById("selected_order");
+const selectedWorkerTypes = [];
 
 function updateSelectedOrder() {
-  const checkboxes = document.querySelectorAll('input[name="worker_type[]"]:checked');
+  const checkboxes = document.querySelectorAll('input[name="worker_type[]"]');
+
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked && !selectedWorkerTypes.includes(checkbox.value)) {
+      selectedWorkerTypes.push(checkbox.value);
+    } else if (!checkbox.checked && selectedWorkerTypes.includes(checkbox.value)) {
+      const index = selectedWorkerTypes.indexOf(checkbox.value);
+      selectedWorkerTypes.splice(index, 1);
+    }
+  });
+
   let order = "";
-  checkboxes.forEach((checkbox, index) => {
-    order += `${index + 1}. ${checkbox.value}<br>`;
+  selectedWorkerTypes.forEach((workerType, index) => {
+    order += `${index + 1}. ${workerType}<br>`;
   });
   workerTypeContainer.innerHTML = order;
 }
@@ -259,3 +293,23 @@ function updateSelectedOrder() {
 document.querySelectorAll('input[name="worker_type[]"]').forEach((checkbox) => {
   checkbox.addEventListener("change", updateSelectedOrder);
 });
+
+function toggleIframe() {
+  var iframeContainer = document.getElementById('iframeContainer');
+  iframeContainer.style.display = (iframeContainer.style.display === 'none') ? 'block' : 'none';
+}
+
+function toggleAdvancedParameters(show) {
+  var elements = document.querySelectorAll(".advanced_parameters");
+  elements.forEach(function(element) {
+    element.style.display = "none";
+  });
+}
+
+function toggleAdvancedParametersById(id) {
+  var element = document.getElementById(id);
+  if (element) {
+    element.style.display = "none";
+  }
+}
+

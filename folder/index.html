@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Web Interface</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="task-bar">
+    <button class="task-bar__button">Save</button>
+    <button class="task-bar__button">Save &amp; Return</button>
+    <button class="task-bar__button">Save and Assign to Location</button>
+    <button class="task-bar__button">Return</button>
+    <button class="task-bar__button">New</button>
+    <button class="task-bar__button">Duplicate</button>
+    <button class="task-bar__button">Refresh</button>
+  </div>
+  <div class="section-container" id="name-section">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+  </div>
+
+  <div class="section-container" id="engine-will-section">
+    <label for="action">Engine Will:</label>
+    <select id="action" name="action">
+      <option value="">-- Select an option --</option>
+      <option value="Generate Open Shifts Only">Generate Open Shifts Only</option>
+      <option value="Assign Open Shifts Only">Assign Open Shifts Only</option>
+      <option value="Generate and Assign Shifts">Generate and Assign Shifts</option>
+      <option value="Optimize Shift Contents">Optimize Shift Contents</option>
+      <option value="Generate Employee Shifts Only">Generate Employee Shifts Only</option>
+      <option value="Delete">Delete</option>
+      <option value="Advanced">Advanced</option>
+    </select>
+  </div>
+  
+  <div class="separator"></div>
+  
+  <div id="ukg-accordion" style="display:none;">
+    <ukg-accordion single heading-style="undefined" gray-bg remove-divider>
+      <ukg-accordion-panel header="Shift Building">
+        <div>
+          <ul>
+            <li id="shift_template_li">
+              <label for="shift_template">Shift Template profile to use:</label>
+              <select id="shift_template" name="shift_template">
+                <option value="Current User's Shift Template Profile">Current User's Shift Template Profile</option>
+                <option value="7t015 - 15t023 - 23t07">7t015 - 15t023 - 23t07</option>
+                <option value="97270 SG Shift Template DAP">97270 SG Shift Template DAP</option>
+                <option value="All Shift Templates">All Shift Templates</option>
+                <option value="EarlyLongTemplates">EarlyLongTemplates</option>
+                <option value="Empty">Empty</option>
+                <option value="Labor Templates">Labor Templates</option>
+                <option value="manager DAP">manager DAP</option>
+                <option value="OR Templates">OR Templates</option>
+                <option value="REG-Template">REG-Template</option>
+                <option value="SGN-156206-ST DAP">SGN-156206-ST DAP</option>
+                <option value="SGN-157140-Shift Template DAP">SGN-157140-Shift Template DAP</option>
+                <option value="SGN-157148-Profile">SGN-157148-Profile</option>
+                <option value="SGN-158170-shiftTemplateDAP">SGN-158170-shiftTemplateDAP</option>
+                <option value="SGN-158171 -shiftTemplateDAP">SGN-158171 -shiftTemplateDAP</option>
+                <option value="SGN-158172-shiftTemplateDAP">SGN-158172-shiftTemplateDAP</option>
+                <option value="SGN-158444-STDAP-7A3P-7A1 P">SGN-158444-STDAP-7A3P-7A1 P</option>
+                <option value="SGN-Shift Template Profile MM">SGN-Shift Template Profile MM</option>
+                <option value="SGN-shiftTProf-t204-8a-2p">SGN-shiftTProf-t204-8a-2p</option>
+                <option value="SGN-shiftTProf-t205-9p-3a">SGN-shiftTProf-t205-9p-3a</option>
+              </select>
+
+            </li>
+            <li id="shift_profile_sets_li">Shift profile sets for open shifts</li>
+            <li id="multi_job_shifts_li">
+              <label for="multi_job_shifts">Allow Multi-Job Shifts</label>
+              <input type="checkbox" id="multi_job_shifts" name="multi_job_shifts">
+            </li>
+            <li id="primary_job_only_li">
+              <label for="primary_job_only">Assign shifts to primary job only</label>
+              <input type="checkbox" id="primary_job_only" name="primary_job_only">
+            </li>
+            <li id="min_job_segment_length_li">
+              <label for="min_job_segment_length">Minimum Job Segment Length (hh:mm):</label>
+              <input type="time" id="min_job_segment_length" name="min_job_segment_length" step="60"
+                pattern="[0-9]{2}:[0-9]{2}">
+            </li>
+          </ul>
+        </div>
+      </ukg-accordion-panel>
+      <ukg-accordion-panel header="Employee Schedule" id="employee_panel">
+        <div>
+          <ul>
+            <li id="employee_pref_weight">Overall employee preferences weight
+              <input type="range" id="employee_pref_weight_slider" name="slider" min="0" max="100" step="1" value="0">
+              <span id="employee_pref_weight_value">0</span>
+            </li>
+
+            <li id="preferred_availability">Preferred availability
+              <input type="range" id="preferred_availability_slider" name="slider" min="0" max="100" step="1" value="0">
+              <span id="preferred_availability_value">0%</span>
+            </li>
+
+            <li id="employee_preferred_job">Employee preferred job
+              <input type="range" id="employee_preferred_job_slider" name="slider" min="0" max="100" step="1" value="0">
+              <span id="employee_preferred_job_value">0%</span>
+            </li>
+
+            <li id="preferred_hours_per_week">Preferred hours per week
+              <input type="range" id="preferred_hours_per_week_slider" name="slider" min="0" max="100" step="1"
+                value="0">
+              <span id="preferred_hours_per_week_value">0%</span>
+            </li>
+
+            <li id="preferred_day_off">Preferred day off
+              <input type="range" id="preferred_day_off_slider" name="slider" min="0" max="100" step="1" value="0">
+              <span id="preferred_day_off_value">0%</span>
+            </li>
+
+            <li id="most_hours_per_week">Most hours per week
+              <input type="range" id="most_hours_per_week_slider" name="slider" min="0" max="100" step="1" value="0">
+              <span id="most_hours_per_week_value">0%</span>
+            </li>
+
+            <li id="earliest_shift">Earliest shift
+              <input type="range" id="earliest_shift_slider" name="slider" min="0" max="100" step="1" value="0">
+              <span id="earliest_shift_value">0%</span>
+            </li>
+
+            <li id="longest_shift">Longest shift
+              <input type="range" id="longest_shift_slider" name="slider" min="0" max="100" step="1" value="0">
+              <span id="longest_shift_value">0%</span>
+            </li>
+            <li id="custom_field_employee_priority">Custom field for employee priority
+              <label for="my_dropdown">Low job priority:</label>
+              <select id="my_dropdown" name="low_job_priority">
+                <option value="None">None</option>
+                <option value="Only_Custom_Data_Field">Only Custom Data Field</option>
+                <option value="Seniority">Seniority</option>
+                <option value="EarlyLongCustomField">EarlyLongCustomField</option>
+              </select>
+            </li>
+            <li>
+              <div>
+                <label for="worker_type">Worker Type Priority:</label><br>
+                <input type="checkbox" id="contract" name="worker_type[]" value="contract">
+                <label for="contract">Contract</label><br>
+                <input type="checkbox" id="full-time" name="worker_type[]" value="full-time">
+                <label for="full-time">Full Time</label><br>
+                <input type="checkbox" id="hourly" name="worker_type[]" value="hourly">
+                <label for="hourly">Hourly</label><br>
+                <input type="checkbox" id="part-time" name="worker_type[]" value="part-time">
+                <label for="part-time">Part Time</label><br>
+                <input type="checkbox" id="per-diem" name="worker_type[]" value="per-diem">
+                <label for="per-diem">Per Diem</label><br>
+                <input type="checkbox" id="project" name="worker_type[]" value="project">
+                <label for="project">Project</label><br>
+              </div>
+              <label for="order" style="text-decoration: underline;">Order:</label><br>
+              <div id="selected_order"></div>
+
+            </li>
+            <li id="equalization_type_li">
+              <label for="equalization_type">Worker type equalization:</label>
+              <select id="equalization_type" name="equalization_type">
+                <option value="None">None</option>
+                <option value="Equalize_Hours">Equalize Hours</option>
+                <option value="Equalize_Preferences">Equalize Preferences</option>
+                <option value="Equalize_Hours_and_Preferences">Equalize Hours and Preferences</option>
+              </select>
+            </li>
+            <li id="worker_type_hour_equalization_weight_li">Worker type hour equalization weight <input type="range"
+                id="my_slider" name="slider" min="0" max="100" step="1" value="0"></li>
+          </ul>
+        </div>
+      </ukg-accordion-panel>
+      <ukg-accordion-panel header="Coverage">
+        <div>
+          <ul>
+            <li id="workload_field">
+              <label for="my_dropdown">Workload:</label>
+              <select id="my_dropdown" name="workload">
+                <option value="Plan_Field">Plan</option>
+                <option value="Budget_Field">Budget</option>
+              </select>
+            </li>
+            <li>Minimize Overcoverage <input type="range" id="overcoverage_slider" name="slider" min="0" max="100"
+                step="1" value="0"><span id="overcoverage_value">0%</span></li>
+            <li>Minimize Undercoverage <input type="range" id="undercoverage_slider" name="slider" min="0" max="100"
+                step="1" value="0"><span id="undercoverage_value">0%</span></li>
+            <li>Minimize Zero Coverage <input type="range" id="zero_coverage_slider" name="slider" min="0" max="100"
+                step="1" value="0"><span id="zero_coverage_value">0%</span></li>
+            <li id="skill_and_certification">Skill and Certification UnderCoverage Weight <input type="range" id="skill_and_certification_slider" name="slider" min="0" max="100"
+                step="1" value="0"><span id="skill_and_certification_value">0</span></li>
+          </ul>
+        </div>
+      </ukg-accordion-panel>
+      <ukg-accordion-panel header="Job Priority">
+        <div>
+          <ul>
+            <li id="low_job_priority_li">
+              <label for="my_dropdown">Low job priority:</label>
+              <select id="my_dropdown" name="low_job_priority">
+                <option value="none">None</option>
+                <option value="All_Administrational_Groups">All Administrational Groups</option>
+                <option value="All_Organizational_Groups">All Organizational groups</option>
+                <option value="none">None</option>
+                <option value="All_Administrational_Groups">All Administrational Groups</option>
+                <option value="All_Organizational_Groups">All Organizational groups</option>
+                <option value="Ames_Set">Ames Set</option>
+                <option value="Any_job_in_the_Sched_Gen_store">Any job in the Sched Gen store</option>
+                <option value="Arlington_Set">Arlington Set</option>
+                <option value="Atlanta_Set">Atlanta Set</option>
+                <option value="Baltimore_Set">Baltimore Set</option>
+                <option value="Bethesda_Set">Bethesda Set</option>
+                <option value="Boston-Prudential_Set">Boston-Prudential Set</option>
+                <option value="Boulder">Boulder</option>
+                <option value="Brookside_Set">Brookside Set</option>
+                <option value="Burlington_Set">Burlington Set</option>
+                <option value="Champaign_Set">Champaign Set</option>
+                <option value="Charlottesville_Set">Charlottesville Set</option>
+                <option value="Chicago_-_Rush_St_Set">Chicago - Rush St Set</option>
+                <option value="CovJobXFRSetSite1">CovJobXFRSetSite1</option>
+                <option value="CovJobXFRSetSite2">CovJobXFRSetSite2</option>
+                <option value="CovJobXFRSetSite3">CovJobXFRSetSite3</option>
+                <option value="CovJ0bXFRSetSite4">CovJ0bXFRSetSite4</option>
+              </select>
+            </li>
+            <li id="high_job_priority_li">
+              <label for="my_dropdown">High job priority:</label>
+              <select id="my_dropdown" name="high_job_priority">
+                <option value="none">None</option>
+                <option value="All_Administrational_Groups">All Administrational Groups</option>
+                <option value="All_Organizational_Groups">All Organizational groups</option>
+                <option value="none">None</option>
+                <option value="All_Administrational_Groups">All Administrational Groups</option>
+                <option value="All_Organizational_Groups">All Organizational groups</option>
+                <option value="Ames_Set">Ames Set</option>
+                <option value="Any_job_in_the_Sched_Gen_store">Any job in the Sched Gen store</option>
+                <option value="Arlington_Set">Arlington Set</option>
+                <option value="Atlanta_Set">Atlanta Set</option>
+                <option value="Baltimore_Set">Baltimore Set</option>
+                <option value="Bethesda_Set">Bethesda Set</option>
+                <option value="Boston-Prudential_Set">Boston-Prudential Set</option>
+                <option value="Boulder">Boulder</option>
+                <option value="Brookside_Set">Brookside Set</option>
+                <option value="Burlington_Set">Burlington Set</option>
+                <option value="Champaign_Set">Champaign Set</option>
+                <option value="Charlottesville_Set">Charlottesville Set</option>
+                <option value="Chicago_-_Rush_St_Set">Chicago - Rush St Set</option>
+                <option value="CovJobXFRSetSite1">CovJobXFRSetSite1</option>
+                <option value="CovJobXFRSetSite2">CovJobXFRSetSite2</option>
+                <option value="CovJobXFRSetSite3">CovJobXFRSetSite3</option>
+                <option value="CovJ0bXFRSetSite4">CovJ0bXFRSetSite4</option>
+              </select>
+            </li>
+          </ul>
+        </div>
+      </ukg-accordion-panel>
+      <ukg-accordion-panel header="Budget" id="budget_panel">
+        <div>
+          <ul>
+            <li id="budget_type_li">
+              <label for="budget_type">Budget type:</label>
+              <select id="budget_type" name="budget_type">
+                <option value="None">None</option>
+                <option value="Budget Cost From Strategy">Budget Cost From Strategy</option>
+                <option value="Budget Hours From Strategy">Budget Hours From Strategy</option>
+                <option value="Imported Budget Cost">Imported Budget Cost</option>
+                <option value="Imported Budget Hours">Imported Budget Hours</option>
+              </select>
+            </li>
+            <li id="budget_limit_per_week_li">Budget limit per week <input type="number" id="quantity" name="quantity"
+                min="0" value="0"></li>
+            <li id="budget_limit_currency_li">Budget limit per week currency
+              <label for="currency">Currency:</label>
+              <select id="currency" name="currency">
+                <option value="None">None</option>
+                <option value="India, INR">India , INR</option>
+                <option value="Denmark, DKK">Denmark , DKK</option>
+                <option value="Australia, AUD">Australia , AUD</option>
+                <option value="Japan, JPY">Japan , JPY</option>
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="Canada, CAD">Canada , CAD</option>
+                <option value="China, CNY">China , CNY</option>
+                <option value="Hun ar, HUF">Hun ar , HUF</option>
+              </select>
+            </li>
+            <li id="budget_tolerance_percentage_li">Budget tolerance percentage <input type="range"
+                id="budget_tolerance_percentage_slider" name="slider" min="0" max="100" step="1" value="0"> <span
+                id="budget_tolerance_percentage_value">0%</span></li>
+            <li id="weekly_budget_weight_li">Weekly budget weight <input type="range" id="weekly_budget_weight_slider"
+                name="slider" min="0" max="100" step="1" value="0"> <span id="weekly_budget_weight_value">0</span></li>
+          </ul>
+        </div>
+      </ukg-accordion-panel>
+    </ukg-accordion>
+  </div>
+  <div id="delete_checkbox" style="display: none;">
+    <label for="delete_checkbox">Treat Manually Created Shifts as Locked</label>
+    <input type="checkbox" id="delete_checkbox" name="delete_checkbox">
+  </div>
+  <script src="script.js"></script>
+  <style src="style.css"></style>
+  <iframe id="webchat_iframe" src="https://web.powerva.microsoft.com/environments/Default-7b6f35d2-1f98-4e5e-82eb-e78f6ea5a1de/bots/crd93_strategySuggesterV1/webchat?__version__=2" frameborder="0" ></iframe>
+</body>
+
+</html>
